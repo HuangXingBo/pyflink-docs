@@ -1,0 +1,7 @@
+*.pyc
+__pycache__/
+build/
+dist/
+.idea/
+!.idea/vcs.xml
+pyflink-docs.egg-info/
