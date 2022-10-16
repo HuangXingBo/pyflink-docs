@@ -2,6 +2,7 @@
 
 .. toctree::
     :maxdepth: 4
-    :glob:
+    :hidden:
 
-    installation
+    getting_started/index
+    user_guide/index
