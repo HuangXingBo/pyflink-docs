@@ -10,3 +10,4 @@ jupytext
 sphinx-last-updated-by-git
 sphinx-codeautolink
 nbsphinx
+apache-flink
