@@ -1,3 +1,6 @@
+import os
+import sys
+
 extensions = [
     'nbsphinx',
     'sphinxcontrib.rsvgconverter',  # for SVG->PDF conversion in LaTeX output
@@ -25,11 +28,39 @@ mathjax3_config = {
 master_doc = 'index'
 
 project = 'pyflink-docs'
-author = 'Xingbo'
-copyright = '2022, ' + author
+author = 'PyFlink'
+copyright = ''
+version_file = os.path.join("..", 'src/version.py')
+try:
+    exec(open(version_file).read())
+except IOError:
+    print("Failed to load PyFlink version file for packaging. " +
+          "'%s' not found!" % version_file,
+          file=sys.stderr)
+    sys.exit(-1)
+# The short X.Y version
+version = __version__  # noqa
+# The full version, including alpha/beta/rc tags
+release = os.environ.get('RELEASE_VERSION', version)
 html_show_copyright = False
 
-html_title = project + ' version ' + '0.1'
+html_title = project + ' version ' + version
+
+# Links used globally in the RST files.
+# These are defined here to allow link substitutions dynamically.
+# https://notebooks.gesis.org/binder/jupyter/user/huangxingbo-pyflink-docs-jhey8kw4/lab/tree/docs/getting_started/quickstart/table_api.ipynb
+rst_epilog = """
+.. |binder| replace:: Live Notebook
+.. _binder: https://mybinder.org/v2/gh/huangxingbo/pyflink-docs/{0}?filepath=docs%2Fgetting_started%2Fquickstart%2Ftable_api.ipynb
+.. |binder_table| replace:: Live Notebook: Table
+.. _binder_table: https://mybinder.org/v2/gh/huangxingbo/pyflink-docs/{0}?filepath=docs%2Fgetting_started%2Fquickstart%2Ftable_api.ipynb
+.. |binder_datastream| replace:: Live Notebook: DataStream
+.. _binder_datastream: https://mybinder.org/v2/gh/huangxingbo/pyflink-docs/{0}?filepath=docs%2Fgetting_started%2Fquickstart%2Fdatastream_api.ipynb
+.. |examples| replace:: Examples
+.. _examples: https://github.com/apache/flink/tree/{1}/flink-python/pyflink/examples
+""".format(
+    os.environ.get("GIT_HASH", "main"),
+    os.environ.get("GIT_HASH", "master"))
 
 if 'html_theme' not in globals():
     try:
