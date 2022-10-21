@@ -5,5 +5,5 @@ User Guide
 .. toctree::
     :maxdepth: 4
 
-    cookbook/index
-    faq
+    realtime_feature
+    flink_ml
